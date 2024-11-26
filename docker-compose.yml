@@ -1,0 +1,30 @@
+services:
+  web:
+    image: tilshansanoj/devops-challenge-repo:web-latest
+    ports:
+      - "${WEB_PORT}:${WEB_PORT}"
+    command: npm start
+    environment:
+      - PORT=${WEB_PORT}
+      - API_HOST=${API_HOST}
+
+  api:
+    image: tilshansanoj/devops-challenge-repo:api-latest
+    ports:
+      - "${API_PORT}:${API_PORT}"
+    command: npm start
+
+    environment:
+      - PORT=${API_PORT}
+      - DB=${API_DB}
+
+  db:
+      image: postgres:15.1-alpine
+      restart: always
+      environment:
+        POSTGRES_USER: root
+        POSTGRES_PASSWORD: root
+        POSTGRES_DB: test_db
+      ports:
+        - 5432:5432    
+
