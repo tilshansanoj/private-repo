@@ -1,4 +1,5 @@
 services:
+
   nginx-proxy:
     image: nginx:alpine
     container_name: nginx-proxy
@@ -9,6 +10,10 @@ services:
     networks:
       - frontend
       - backend # Connect to both networks to route traffic
+    depends_on:
+      - web
+      - api
+    restart: unless-stopped
 
   web:
     image: tilshansanoj/devops-challenge-repo:web-latest
@@ -19,42 +24,52 @@ services:
       - PORT=${WEB_PORT}
       - API_HOST=${API_HOST}
     networks:
-      - backend    
+      - backend
+    depends_on:
+      - api    
+    restart: unless-stopped
 
   api:
     image: tilshansanoj/devops-challenge-repo:api-latest
+    deploy:
+      replicas: 2
     ports:
-      - "${API_PORT}:${API_PORT}"
+      - 8081-8082:8081
     command: npm start
     environment:
-      - PORT=${API_PORT}
+      - PORT=8081-8082:8081
       - DB=${API_DB}
     networks:
       - backend    
+    depends_on:
+      - db
+    restart: unless-stopped
 
   db:
     image: postgres:15.1-alpine
-    deploy:
-      resources:
-        limits:
-          cpus: '0.50'
-          memory: 50M
-          pids: 1
-        reservations:
-          cpus: '0.25'
-          memory: 20M
+    volumes:
+      - /data/mount:/var/lib/postgresql/data
     restart: always
     environment:
-      POSTGRES_USER: root
-      POSTGRES_PASSWORD: root
-      POSTGRES_DB: test_db
+      POSTGRES_USER: ${DB_USER}
+      POSTGRES_PASSWORD: ${DB_PASS}
+      POSTGRES_DB: ${DB_NAME}
     ports:
       - 5432:5432
     networks:
-      - backend    
+      - backend
+    env_file:
+      - .env
+    healthcheck:
+      test: ["CMD-SHELL",  "pg_isready"]
+      interval: 10s
+      timeout: 3s
+      retries: 3   
 
 networks:
+
   frontend:
     driver: bridge
+    
   backend:
     driver: bridge
