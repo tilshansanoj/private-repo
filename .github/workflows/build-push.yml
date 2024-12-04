@@ -58,6 +58,6 @@ jobs:
   
   deploy:
     runs-on: ubuntu-latest
-    needs: build-web,build-api
+    needs: [build-web, build-api]
     steps:
       - run: echo "hello world, hope this works"
