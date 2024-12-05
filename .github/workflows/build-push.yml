@@ -61,4 +61,11 @@ jobs:
     runs-on: ubuntu-latest
     needs: [build-web, build-api]
     steps:
-      - run: echo "hello world, hope this works"
+      - name: executing remote ssh commands using ssh keys
+        uses: appleboy/ssh-action@v1.2.0
+        with:
+          host: ${{ vars.SSH_HOST }}
+          username: ${{ vars.SSH_USER}}
+          key: ${{ secrets.SSH_PRIVATE_KEY }}
+          port: ${{ vars.SSH_PORT }}
+          script: whoami
