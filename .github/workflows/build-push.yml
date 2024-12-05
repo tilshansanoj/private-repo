@@ -74,4 +74,4 @@ jobs:
           script: |
             git clone https://github.com/tilshansanoj/devops-challenge-apps.git 
             cd devops-challenge-apps
-            docker compose up
+            docker compose up -d
