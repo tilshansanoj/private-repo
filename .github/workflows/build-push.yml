@@ -61,11 +61,17 @@ jobs:
     runs-on: ubuntu-latest
     needs: [build-web, build-api]
     steps:
-      - name: executing remote ssh commands using ssh key
+
+      #Establishing connection to VM via ssh
+      - name: Executing remote ssh commands using ssh key
         uses: appleboy/ssh-action@v1.2.0
         with:
           host: ${{ vars.SSH_HOST }}
           username: ${{ vars.SSH_USER }}
           key: ${{ secrets.SSH_KEY }}
           port: ${{ secrets.SSH_PORT }}
-          script: whoami
+          script: whoami #checking the ssh connection
+      
+      #Clone the Repository from main branch
+      - name: Clone the repository
+        run: git clone https://github.com/tilshansanoj/devops-challenge-apps.git && devops-challenge-apps && docker compose up
