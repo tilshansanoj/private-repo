@@ -28,6 +28,7 @@ jobs:
       with: 
         context: ./api
         push: true
+        #tagging the built image
         tags: ${{ vars.DOCKERHUB_USERNAME }}/github-actions-api:latest, ${{ vars.DOCKERHUB_USERNAME }}/github-actions-api:${{ github.run_number}}
 
   build-web:
@@ -54,12 +55,15 @@ jobs:
       with: 
         context: ./web
         push: true
+        #tagging the built image
         tags: ${{ vars.DOCKERHUB_USERNAME }}/github-actions-web:latest, ${{ vars.DOCKERHUB_USERNAME }}/github-actions-web:${{ github.run_number}}
   
-  #Dummy Deployment stage
+  #Deployment stage using the previously built web and api images
   deploy:
     runs-on: ubuntu-latest
-    needs: [build-web, build-api]
+
+    needs: [build-web, build-api] # will start the deploy job once both build-web and build-api jobs are done
+
     steps:
 
       #Establishing connection to VM via ssh
@@ -70,8 +74,15 @@ jobs:
           username: ${{ vars.SSH_USER }}
           key: ${{ secrets.SSH_KEY }}
           port: ${{ secrets.SSH_PORT }}
-          # script: whoami #checking the ssh connection
-          script: |
-            git clone https://github.com/tilshansanoj/devops-challenge-apps.git 
-            cd devops-challenge-apps
-            docker compose down && docker compose up -d
+
+      - name: Cloning the repository
+        run: git clone https://github.com/tilshansanoj/devops-challenge-apps.git && cd devops-challenge-apps
+      - name: Removing ongoing docker compose components
+        run: docker compose down
+      - name: Running the docker compose
+        run: docker compose -d
+
+          # script: |
+          #   git clone https://github.com/tilshansanoj/devops-challenge-apps.git 
+          #   cd devops-challenge-apps
+          #   docker compose down && docker compose up -d
