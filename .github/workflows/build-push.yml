@@ -80,7 +80,7 @@ jobs:
       - name: Removing ongoing docker compose components
         run: cd devops-challenge-apps && docker compose down
       - name: Running the docker compose
-        run: pwd && docker compose up -d
+        run: cd devops-challenge-apps && docker compose up -d
 
           # script: |
           #   git clone https://github.com/tilshansanoj/devops-challenge-apps.git 
