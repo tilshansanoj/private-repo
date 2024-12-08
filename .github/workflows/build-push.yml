@@ -75,10 +75,8 @@ jobs:
           key: ${{ secrets.SSH_KEY }}
           port: ${{ secrets.SSH_PORT }}
 
-      - name: Cloning the repository
-        run: git@github.com/tilshansanoj/devops-challenge-apps.git
-          
-        #run: git clone https://github.com/tilshansanoj/devops-challenge-apps.git 
+      - name: Cloning the repository      
+        run: git clone git@github.com:tilshansanoj/private-repo.git          
 
       - name: Removing ongoing docker compose components
         run: cd devops-challenge-apps && docker compose down
