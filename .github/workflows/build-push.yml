@@ -1,0 +1,92 @@
+on:
+  push:
+    branches:
+      - github-actions # Workflow trigger on pushes to this branch
+
+jobs:
+  build-api:
+    runs-on: ubuntu-latest
+
+    steps:
+
+    #Checkout the code from repository
+    - name: Checkout the code
+      uses: actions/checkout@v4
+
+    #Login to Docker hub 
+    #using docker/login-action
+    - name: Login to Docker Hub
+      uses: docker/login-action@v3
+      with:
+        username: ${{ vars.DOCKERHUB_USERNAME }} 
+        password: ${{ secrets.DOCKERHUB_ACCESS_TOKEN }}
+    
+    #Build and push the docker image to the docker hub 
+    #using docker/build-push-action
+    - name: Build and push to Docker hub
+      uses: docker/build-push-action@v6
+      with: 
+        context: ./api
+        push: true
+        #tagging the built image
+        tags: ${{ vars.DOCKERHUB_USERNAME }}/github-actions-api:latest, ${{ vars.DOCKERHUB_USERNAME }}/github-actions-api:${{ github.run_number}}
+
+  build-web:
+    runs-on: ubuntu-latest
+
+    steps:
+
+    #Checkout the code from repository
+    - name: Checkout the code
+      uses: actions/checkout@v4
+
+    #Login to Docker hub 
+    #using docker/login-action
+    - name: Login to Docker Hub
+      uses: docker/login-action@v3
+      with:
+        username: ${{ vars.DOCKERHUB_USERNAME }} 
+        password: ${{ secrets.DOCKERHUB_ACCESS_TOKEN }}
+    
+    #Build and push the docker image to the docker hub 
+    #using docker/build-push-action
+    - name: Build and push to Docker hub
+      uses: docker/build-push-action@v6
+      with: 
+        context: ./web
+        push: true
+        #tagging the built image
+        tags: ${{ vars.DOCKERHUB_USERNAME }}/github-actions-web:latest, ${{ vars.DOCKERHUB_USERNAME }}/github-actions-web:${{ github.run_number}}
+  
+  #Deployment stage using the previously built web and api images
+  deploy:
+    runs-on: ubuntu-latest
+
+    needs: [build-web, build-api] # will start the deploy job once both build-web and build-api jobs are done
+
+    steps:
+
+      #Establishing connection to VM via ssh
+      - name: Executing remote ssh commands using ssh key
+        uses: appleboy/ssh-action@v1.2.0
+        with:
+          host: ${{ vars.SSH_HOST }}
+          username: ${{ vars.SSH_USER }}
+          key: ${{ secrets.SSH_KEY }}
+          port: ${{ secrets.SSH_PORT }}
+
+      - name: Cloning the repository
+        run: git@github.com/tilshansanoj/devops-challenge-apps.git
+          
+        #run: git clone https://github.com/tilshansanoj/devops-challenge-apps.git 
+
+      - name: Removing ongoing docker compose components
+        run: cd devops-challenge-apps && docker compose down
+        
+      - name: Running the docker compose
+        run: cd devops-challenge-apps && docker compose up -d
+
+          # script: |
+          #   git clone https://github.com/tilshansanoj/devops-challenge-apps.git 
+          #   cd devops-challenge-apps
+          #   docker compose down && docker compose up -d
