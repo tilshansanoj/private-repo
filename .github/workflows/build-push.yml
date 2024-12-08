@@ -1,7 +1,7 @@
 on:
   push:
     branches:
-      - github-actions # Workflow trigger on pushes to this branch
+      - master # Workflow trigger on pushes to this branch
 
 jobs:
   build-api:
