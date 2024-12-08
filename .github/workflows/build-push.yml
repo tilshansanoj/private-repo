@@ -76,8 +76,7 @@ jobs:
           port: ${{ secrets.SSH_PORT }}
 
       - name: Cloning the repository
-        script: |
-          git@github.com/tilshansanoj/devops-challenge-apps.git
+        run: git@github.com/tilshansanoj/devops-challenge-apps.git
           
         #run: git clone https://github.com/tilshansanoj/devops-challenge-apps.git 
 
