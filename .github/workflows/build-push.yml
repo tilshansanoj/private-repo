@@ -75,8 +75,12 @@ jobs:
           key: ${{ secrets.SSH_KEY }}
           port: ${{ secrets.SSH_PORT }}
 
-      - name: Cloning the repository      
-        run: git clone git@github.com:tilshansanoj/private-repo.git          
+      - name: Clone GuillaumeFalourd/formulas-training PRIVATE repository
+        uses: GuillaumeFalourd/clone-github-repo-action@v2.3
+        with:
+          owner: 'tilshansanoj'
+          repository: 'private-repo'
+          access-token: ${{ secrets.ACCESS_TOKEN }}         
 
       - name: Removing ongoing docker compose components
         run: cd devops-challenge-apps && docker compose down
