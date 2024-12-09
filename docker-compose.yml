@@ -16,7 +16,7 @@ services:
     restart: unless-stopped
 
   web:
-    image: tilshansanoj/github-actions:${TAG_WEB}
+    image: tilshansanoj/github-actions-web:${TAG_WEB}
     ports:
       - "${WEB_PORT}:${WEB_PORT}"
     command: npm start
@@ -30,7 +30,7 @@ services:
     restart: unless-stopped
 
   api:
-    image: tilshansanoj/github-actions:${TAG_API}
+    image: tilshansanoj/github-actions-api:${TAG_API}
     deploy:
       replicas: 2
     ports:
