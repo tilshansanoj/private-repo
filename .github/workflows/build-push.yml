@@ -80,8 +80,8 @@ jobs:
   
                 
 
-      - name: Removing ongoing docker compose components
-        run: cd private-repo && export TAG_WEB=${{ vars.WEB_TAG }} && export TAG_API=${{ vars.API_TAG }} && docker compose down
+      # - name: Removing ongoing docker compose components
+      #   run: cd private-repo && export TAG_WEB=${{ vars.WEB_TAG }} && export TAG_API=${{ vars.API_TAG }} && docker compose down
         
       - name: Running the docker compose
 
