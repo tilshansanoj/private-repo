@@ -85,7 +85,7 @@ jobs:
         
       - name: Running the docker compose
 
-        run: cd devops-challenge-apps && TAG_WEB=${{ vars.WEB_TAG }} TAG_API=${{ vars.API_TAG }} docker compose up -d
+        run: cd devops-challenge-apps && TAG_WEB=${{ vars.WEB_TAG }} && TAG_API=${{ vars.API_TAG }} && docker compose up -d
 
           # script: |
           #   git clone https://github.com/tilshansanoj/devops-challenge-apps.git 
