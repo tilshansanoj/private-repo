@@ -1,3 +1,18 @@
 #SPDX-License-Identifier: MIT-0
 ---
 # defaults file for docker-role
+nginx_port: 80
+web_image: "tilshansanoj/github-actions-web"
+tag_web: "latest"
+web_port: 3000
+api_host: "api.local"
+api_image: "tilshansanoj/github-actions-api"
+tag_api: "latest"
+api_replicas: 2
+api_ports: "8081-8082:8081"
+api_env_ports: "8081"
+api_db: "postgres://user:password@localhost:5432/dbname"
+db_data_mount: "/data/mount"
+db_user: "postgres"
+db_pass: "password"
+db_name: "app_db"
