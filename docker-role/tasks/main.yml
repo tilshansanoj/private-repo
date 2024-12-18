@@ -1,12 +1,12 @@
 - name: Copy Docker Compose template
   ansible.builtin.template:
     src: docker-compose.yml.j2
-    dest: /home/ubuntu/docker-compose/docker-compose.yml
+    dest: /opt/docker-compose/docker-compose.yml
   become: true
 
 - name: Pull and restart Docker Compose services
   ansible.builtin.shell:
     cmd: docker-compose up -d
-    chdir: /home/ubuntu/docker-compose
+    chdir: /opt/docker-compose
   become: true
   notify: Restart Docker Compose
