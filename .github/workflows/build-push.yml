@@ -76,7 +76,7 @@ jobs:
           port: ${{ secrets.SSH_PORT }}
 
       - name: Clone the repository
-        run: git clone https://github.com/tilshansanoj/private-repo.git
+        run: git@github.com:tilshansanoj/private-repo.git
                 
 
       # - name: Removing ongoing docker compose components
