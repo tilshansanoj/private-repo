@@ -66,14 +66,16 @@ jobs:
       - name: checkout Code
         uses: actions/checkout@v4
 
-      - name: Executing remote ssh commands using ssh key
-        uses: appleboy/ssh-action@v1.2.0
-        with:
-          host: ${{ vars.SSH_HOST }}
-          username: ${{ vars.UBUNTU_USER }}
-          key: ${{ secrets.UBUNTU_SSH_KEY }}
-          port: ${{ secrets.SSH_PORT }}
-          
+      - name: Setup SSH 
+        shell: bash
+        run: |
+         eval `ssh-agent -s`
+         mkdir -p /home/runner/.ssh/
+         touch /home/runner/.ssh/id_rsa
+         echo -e "${{secrets.UBUNTU_SSH_KEY}}" > /home/runner/.ssh/id_rsa
+         chmod 700 /home/runner/.ssh/id_rsa
+         ssh-keyscan -t rsa,dsa,ecdsa,ed25519 ${{secrets.SSH_HOST}} >> /home/runner/.ssh/known_hosts
+
       - name: install ansible
         run: |
           sudo apt update
