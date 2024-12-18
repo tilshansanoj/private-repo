@@ -75,7 +75,7 @@ jobs:
           key: ${{ secrets.UBUNTU_SSH_KEY }}
           port: ${{ secrets.SSH_PORT }}
 
-      - name: Clone the private repository
+      - name: Clone the repository
         run: git clone https://github.com/tilshansanoj/private-repo.git
                 
 
