@@ -76,6 +76,8 @@ jobs:
         with:
           playbook: playbook-install-docker.yml
           key: ${{ secrets.UBUNTU_SSH_KEY }}
+          options: 
+            -i inventory
  
   
   
