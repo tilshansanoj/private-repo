@@ -8,7 +8,7 @@ tag_api: "api-latest"
 api_replicas: 2
 api_ports: "8081-8082:8081"
 api_env_ports: "8081"
-api_db: "postgres://user:password@localhost:5432/dbname"
+api_db: "postgres://postgres:password@db:5432/app_db"
 db_data_mount: "/data/mount"
 db_user: "postgres"
 db_pass: "password"
