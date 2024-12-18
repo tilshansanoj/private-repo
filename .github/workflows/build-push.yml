@@ -66,24 +66,16 @@ jobs:
       - name: checkout Code
         uses: actions/checkout@v4
 
-      - name: Setup SSH 
-        shell: bash
-        run: |
-         eval `ssh-agent -s`
-         mkdir -p /home/runner/.ssh/
-         touch /home/runner/.ssh/id_rsa
-         echo -e "${{secrets.UBUNTU_SSH_KEY}}" > /home/runner/.ssh/id_rsa
-         chmod 700 /home/runner/.ssh/id_rsa
-         ssh-keyscan -t rsa,dsa,ecdsa,ed25519 ${{secrets.SSH_HOST}} >> /home/runner/.ssh/known_hosts
-
       - name: install ansible
         run: |
           sudo apt update
-          sudo apt install -y ansible
-
+          sudo apt install -y ansible      
+      
       - name: run ansible playbook
-        run: |
-          ansible-playbook -i inventory playbook-install-docker.yml
-
+        uses: dawidd6/action-ansible-playbook@v2
+        with:
+          playbook: playbook-install-docker.yml
+          key: ${{ secrets.UBUNTU_SSH_KEY }}
+ 
   
   
