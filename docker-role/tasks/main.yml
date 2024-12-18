@@ -6,5 +6,5 @@
 
 - name: Pull and restart Docker Compose services
   ansible.builtin.shell:
-    cmd: cd /home/ubuntu && docker compose up -d
+    cmd: cd /home/ubuntu && docker compose down && docker compose up
   become: true
