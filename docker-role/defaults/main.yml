@@ -1,0 +1,15 @@
+nginx_port: 80
+web_image: "tilshansanoj/github-actions-web"
+tag_web: "web-latest"
+web_port: 8080
+api_host: "http://api:8081"
+api_image: "tilshansanoj/github-actions-api"
+tag_api: "api-latest"
+api_replicas: 2
+api_ports: "8081-8082:8081"
+api_env_ports: "8081"
+api_db: "postgres://root:root@db:5432/root"
+db_data_mount: "/data/mount"
+db_user: "root"
+db_pass: "root"
+db_name: "root"

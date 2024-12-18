@@ -1,0 +1,10 @@
+- name: Copy Docker Compose template
+  ansible.builtin.template:
+    src: docker-compose.yml.j2
+    dest: /home/ubuntu/docker-compose.yml
+  become: true
+
+- name: Pull and restart Docker Compose services
+  ansible.builtin.shell:
+    cmd: cd /home/ubuntu && docker compose up -d
+  become: true
