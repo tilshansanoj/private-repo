@@ -1,10 +1,10 @@
 nginx_port: 80
 web_image: "tilshansanoj/github-actions-web"
-tag_web: "latest"
-web_port: 3000
+tag_web: "web-latest"
+web_port: 8080
 api_host: "api.local"
 api_image: "tilshansanoj/github-actions-api"
-tag_api: "latest"
+tag_api: "api-latest"
 api_replicas: 2
 api_ports: "8081-8082:8081"
 api_env_ports: "8081"
