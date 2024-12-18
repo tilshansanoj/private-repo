@@ -1,7 +1,7 @@
 on:
   push:
     branches:
-      - master # Workflow trigger on pushes to this branch
+      - ci-cd/ansible # Workflow trigger on pushes to this branch
 
 jobs:
   build-api:
@@ -76,8 +76,7 @@ jobs:
           port: ${{ secrets.SSH_PORT }}
 
       - name: Clone the private repository
-        run: git clone https://${{ secrets.ACCESS_TOKEN }}@github.com/tilshansanoj/private-repo
-  
+        run: git clone https://github.com/tilshansanoj/private-repo.git
                 
 
       # - name: Removing ongoing docker compose components
