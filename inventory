@@ -1,0 +1,14 @@
+[servers]
+13.215.228.15 
+47.129.40.249 
+
+[frontend]
+47.129.40.249 
+
+[backend]
+13.215.228.15 
+
+[all:vars]
+ansible_python_interpreter=/usr/bin/python3
+ansible_user=ubuntu
+
