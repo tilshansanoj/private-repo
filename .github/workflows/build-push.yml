@@ -1,7 +1,7 @@
 on:
   push:
     branches:
-      - ci-cd/ansible # Workflow trigger on pushes to this branch
+      - feature/ansible-template # Workflow trigger on pushes to this branch
 
 jobs:
   build-api:
@@ -58,24 +58,22 @@ jobs:
         #tagging the built image
         tags: ${{ vars.DOCKERHUB_USERNAME }}/github-actions-web:${{ vars.WEB_TAG }}, ${{ vars.DOCKERHUB_USERNAME }}/github-actions-web:v${{ github.run_number }}.${{ github.run_attempt }}
   
-  # #Deployment stage using the previously built web and api images
-  # deploy:
-  #   runs-on: ubuntu-latest
+  deployAnsible:
+    runs-on: ubuntu-latest
+    needs: [build-web, build-api]
 
-  #   needs: [build-web, build-api] # will start the deploy job once both build-web and build-api jobs are done
+    steps:
+      - name: checkout Code
+        uses: actions/checkout@v4
 
-  #   steps:
+      - name: install ansible
+        run: |
+          sudo apt update
+          sudo apt install -y ansible
 
-  #     #Establishing connection to VM via ssh
-  #     - name: Executing remote ssh commands using ssh key
-  #       uses: appleboy/ssh-action@v1.2.0
-  #       with:
-  #         host: ${{ vars.SSH_HOST }}
-  #         username: ${{ vars.UBUNTU_USER }}
-  #         key: ${{ secrets.UBUNTU_SSH_KEY }}
-  #         port: ${{ secrets.SSH_PORT }}
-  #         script: |
-  #           git clone https://github.com/tilshansanoj/private-repo.git
-  #           cd private-repo
-  #           export TAG_API=${{ vars.API_TAG }} && export TAG_WEB=${{ vars.WEB_TAG}}
-  #           docker compose up -d
+      - name: run ansible playbook
+        run: |
+          ansible-playbook -i inventory playbook-install-docker.yml
+
+  
+  
