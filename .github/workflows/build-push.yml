@@ -66,10 +66,14 @@ jobs:
       - name: checkout Code
         uses: actions/checkout@v4
 
-      - name: Set up SSH Agent
-        uses: webfactory/ssh-agent@v0.5.4
+      - name: Executing remote ssh commands using ssh key
+        uses: appleboy/ssh-action@v1.2.0
         with:
-          ssh-private-key: ${{ secrets.UBUNTU_SSH_KEY }}
+          host: ${{ vars.SSH_HOST }}
+          username: ${{ vars.UBUNTU_USER }}
+          key: ${{ secrets.UBUNTU_SSH_KEY }}
+          port: ${{ secrets.SSH_PORT }}
+          
       - name: install ansible
         run: |
           sudo apt update
