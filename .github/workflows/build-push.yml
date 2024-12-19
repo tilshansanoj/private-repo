@@ -1,5 +1,7 @@
 on:
   push:
+    branches: 
+      - main
 
 jobs:
   build-api:
@@ -72,7 +74,7 @@ jobs:
       - name: run ansible playbook
         uses: dawidd6/action-ansible-playbook@v2
         with:
-          playbook: playbook-install-docker.yml
+          playbook: playbook-deploy.yml
           key: ${{ secrets.UBUNTU_SSH_KEY }}
           options: 
             -i inventory

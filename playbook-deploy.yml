@@ -2,4 +2,4 @@
   become: true
 
   roles:
-    - install-docker
+    - docker-role
