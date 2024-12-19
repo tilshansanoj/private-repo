@@ -78,6 +78,7 @@ jobs:
           host: ${{ vars.SSH_HOST }}
           username: ${{ vars.SSH_USER }}
           key: ${{ secrets.UBUNTU_SSH_KEY }}
+          port: ${{ secrets.SSH_PORT }}
           script: |
               export TAG_API=api-latest 
               export TAG_WEB=web-latest
