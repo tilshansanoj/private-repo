@@ -80,7 +80,7 @@ jobs:
             ls -al
             export TAG_WEB=web-latest
             export TAG_API=api-latest
-            
+
       - name: install ansible
         run: |
           sudo apt update
@@ -93,7 +93,6 @@ jobs:
           key: ${{ secrets.UBUNTU_SSH_KEY }}
           options: 
             -i inventory
-            -e tag
           
  
   
