@@ -77,10 +77,10 @@ jobs:
           key: ${{ secrets.UBUNTU_SSH_KEY }}
           port: ${{ secrets.SSH_PORT }}
           script: |
-              echo "export TAG_API=api-latest" >> ~/.bashrc
-              echo "export TAG_WEB=web-latest" >> ~/.bashrc
-              source ~/.bashrc
-          
+            ls -al
+            export TAG_WEB=web-latest
+            export TAG_API=api-latest
+            
       - name: install ansible
         run: |
           sudo apt update
