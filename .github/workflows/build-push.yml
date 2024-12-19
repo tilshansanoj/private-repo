@@ -82,8 +82,11 @@ jobs:
           username: ${{ vars.UBUNTU_USER }}
           key: ${{ secrets.UBUNTU_SSH_KEY }}
           port: ${{ secrets.SSH_PORT }}
-          
-        
+          envs: TAG_API,TAG_WEB
+          script: |
+            echo "I am $TAG_API"
+            echo "I am $TAG_WEB"
+            
       
       - name: run ansible playbook
         uses: dawidd6/action-ansible-playbook@v2
