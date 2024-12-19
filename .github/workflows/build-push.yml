@@ -1,7 +1,5 @@
 on:
   push:
-    branches:
-      - feature/ansible-template # Workflow trigger on pushes to this branch
 
 jobs:
   build-api:

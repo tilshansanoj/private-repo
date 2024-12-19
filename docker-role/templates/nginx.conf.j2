@@ -1,0 +1,35 @@
+worker_processes 1;
+
+events {
+    worker_connections 1024;
+}
+
+http {
+    include /etc/nginx/mime.types;
+    default_type application/octet-stream;
+
+    # Define routing based on hostnames
+    server {
+        listen 80;
+
+        # Route to web
+        server_name {{ web_hostname }};
+        location / {
+            proxy_pass {{ web_host }}; # Adjust the port if your service runs on a different one
+            proxy_set_header Host $host;
+            proxy_set_header X-Real-IP $remote_addr;
+            proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+        }
+    }
+    server {
+        listen 80;
+        # Route to api
+        server_name {{ api_hostname }};
+        location / {
+            proxy_pass {{ api_host }}; # Adjust the port if your service runs on a different one
+            proxy_set_header Host $host;
+            proxy_set_header X-Real-IP $remote_addr;
+            proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+        }
+    }
+}
