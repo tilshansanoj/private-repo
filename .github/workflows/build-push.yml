@@ -1,7 +1,5 @@
 on:
   push:
-    branches:
-      - feature/nginx-template # Workflow trigger on pushes to this branch
 
 jobs:
   build-api:
