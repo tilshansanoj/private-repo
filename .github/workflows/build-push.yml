@@ -2,6 +2,7 @@ on:
   push:
     branches: 
       - main
+      - feature/*
 
 jobs:
   build-api:
@@ -70,6 +71,7 @@ jobs:
         run: |
           sudo apt update
           sudo apt install -y ansible      
+          export TAG_WEB=web-latest && export TAG_API=api-latest
       
       - name: run ansible playbook
         uses: dawidd6/action-ansible-playbook@v2
