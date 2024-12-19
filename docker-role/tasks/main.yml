@@ -4,6 +4,12 @@
     dest: /home/ubuntu/docker-compose.yml
   become: true
 
+- name: Copy Nginx Configuration template
+  ansible.builtin.template:
+    src: nginx.conf.j2
+    dest: /home/ubuntu/nginx.conf
+  become: true
+
 - name: Pull and restart Docker Compose services
   ansible.builtin.shell:
     cmd: cd /home/ubuntu && docker compose up -d
