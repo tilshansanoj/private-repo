@@ -15,7 +15,7 @@ services:
     restart: unless-stopped
 
   web:
-    image: {{ web_image }}:{{ tag_web }}
+    image: {{ web_image }}:${TAG_WEB}
     ports:
       - "{{ web_port }}:{{ web_port }}"
     command: npm start
@@ -29,7 +29,7 @@ services:
     restart: unless-stopped
 
   api:
-    image: {{ api_image }}:{{ tag_api }}
+    image: {{ api_image }}:${TAG_API}
     deploy:
       replicas: {{ api_replicas }}
     ports:

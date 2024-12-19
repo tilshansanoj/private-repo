@@ -2,6 +2,7 @@ on:
   push:
     branches: 
       - main
+      - feature/*
 
 jobs:
   build-api:
@@ -71,6 +72,8 @@ jobs:
           sudo apt update
           sudo apt install -y ansible      
       
+            
+      
       - name: run ansible playbook
         uses: dawidd6/action-ansible-playbook@v2
         with:
@@ -78,6 +81,7 @@ jobs:
           key: ${{ secrets.UBUNTU_SSH_KEY }}
           options: 
             -i inventory
+          
  
   
   
