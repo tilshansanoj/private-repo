@@ -2,26 +2,21 @@ on:
   workflow_dispatch:
 
 jobs:
-    install-docker:
-        runs-on: ubuntu-latest
-        
-        steps:
+  install-docker:
+    runs-on: ubuntu-latest
 
-            - name: checkout Code
-              uses: actions/checkout@v4
+    steps:
+      - name: checkout Code
+        uses: actions/checkout@v4
 
-            - name: install ansible
-              run: |
-                sudo apt update
-                sudo apt install -y ansible      
-            
-            - name: run ansible playbook
-              uses: dawidd6/action-ansible-playbook@v2
-              with:
-                playbook: playbook-install-docker.yml
-                key: ${{ secrets.UBUNTU_SSH_KEY }}
-                options: 
-                  -i inventory
+      - name: install ansible
+        run: |
+          sudo apt update
+          sudo apt install -y ansible
 
-
-      
+      - name: run ansible playbook
+        uses: dawidd6/action-ansible-playbook@v2
+        with:
+          playbook: playbook-install-docker.yml
+          key: ${{ secrets.UBUNTU_SSH_KEY }}
+          options: -i inventory
