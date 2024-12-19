@@ -67,10 +67,7 @@ jobs:
       - name: checkout Code
         uses: actions/checkout@v4
 
-      - name: install ansible
-        run: |
-          sudo apt update
-          sudo apt install -y ansible      
+         
 
       - name: establishing ssh connection
         uses: appleboy/ssh-action@v1.2.0
@@ -83,7 +80,10 @@ jobs:
               export TAG_API=api-latest 
               export TAG_WEB=web-latest
           
-          
+      - name: install ansible
+        run: |
+          sudo apt update
+          sudo apt install -y ansible     
       
       - name: run ansible playbook
         uses: dawidd6/action-ansible-playbook@v2
