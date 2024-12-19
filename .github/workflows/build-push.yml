@@ -73,7 +73,7 @@ jobs:
         uses: appleboy/ssh-action@v1.2.0
         with:
           host: ${{ vars.SSH_HOST }}
-          username: ${{ vars.SSH_USER }}
+          username: ${{ vars.UBUNTU_USER }}
           key: ${{ secrets.UBUNTU_SSH_KEY }}
           port: ${{ secrets.SSH_PORT }}
           script: |
