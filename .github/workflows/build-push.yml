@@ -77,8 +77,9 @@ jobs:
           key: ${{ secrets.UBUNTU_SSH_KEY }}
           port: ${{ secrets.SSH_PORT }}
           script: |
-              export TAG_API=api-latest 
-              export TAG_WEB=web-latest
+              echo "export TAG_API=api-latest" >> ~/.bashrc
+              echo "export TAG_WEB=web-latest" >> ~/.bashrc
+              source ~/.bashrc
           
       - name: install ansible
         run: |
@@ -93,6 +94,7 @@ jobs:
           options: 
             -i inventory
             -e tag
+          
  
   
   
