@@ -74,16 +74,15 @@ jobs:
 
       - name: establishing ssh connection
         uses: appleboy/ssh-action@v1.2.0
+        env: 
+          TAG_API: "api-latest"
+          TAG_WEB: "web-latest"
         with:
           host: ${{ vars.SSH_HOST }}
           username: ${{ vars.UBUNTU_USER }}
           key: ${{ secrets.UBUNTU_SSH_KEY }}
           port: ${{ secrets.SSH_PORT }}
-          script: |
-            ls -al
-            export TAG_WEB=web-latest
-            export TAG_API=api-latest
-
+          
         
       
       - name: run ansible playbook
