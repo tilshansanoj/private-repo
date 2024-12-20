@@ -81,6 +81,7 @@ jobs:
           key: ${{ secrets.UBUNTU_SSH_KEY }}
           options: 
             -i inventory
+            -e tag_api=api-latest tag_web=web-latest
           
  
   
