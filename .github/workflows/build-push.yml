@@ -82,7 +82,7 @@ jobs:
           key: ${{ secrets.UBUNTU_SSH_KEY }}
           options: 
             -i inventory
-            --extra-vars tag_api=api-latest tag_web=web-latest
+            --extra-vars "tag_api=api-latest tag_web=web-latest"
           
  
   
